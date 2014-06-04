@@ -1,13 +1,13 @@
 package com.gilt
 
 import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
 
-class HelloWorldTest extends FlatSpec with ShouldMatchers with MockitoSugar {
+class HelloWorldTest extends FlatSpec with Matchers with MockitoSugar {
 
   ignore should "be an ignored test for an example" in {
-    true should be === true
+    true shouldEqual true
   }
 
   "logger" should "just print to STDOUT as an example" in {

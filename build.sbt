@@ -1,5 +1,9 @@
 import SonatypeKeys._
 
+import sbtrelease._
+
+import ReleaseStateTransformations._
+
 releaseSettings
 
 // Import default settings. This changes `publishTo` settings to use the Sonatype repository and add several commands for publishing.
@@ -12,6 +16,8 @@ organization := "com.gilt"
 scalaVersion := "2.10.4"
 
 crossScalaVersions := Seq("2.10.4", "2.11.1")
+
+scalacOptions := Seq("-deprecation", "-unchecked")
 
 libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-api" % "1.7.7",
@@ -45,10 +51,7 @@ lazy val publishSignedAction = { st: State =>
   extracted.runAggregated(com.typesafe.sbt.pgp.PgpKeys.publishSigned in Global in ref, st)
 }
 
-import sbtrelease._
-import ReleaseStateTransformations._
-
-releaseProcess := Seq[ReleaseStep](
+sbtrelease.ReleasePlugin.ReleaseKeys.releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies,
   inquireVersions,
   runTest,
