@@ -1,5 +1,7 @@
 import SonatypeKeys._
 
+releaseSettings
+
 // Import default settings. This changes `publishTo` settings to use the Sonatype repository and add several commands for publishing.
 sonatypeSettings
 
@@ -36,3 +38,25 @@ pomExtra :=
       <url>https://github.com/gilt</url>
     </developer>
   </developers>
+
+lazy val publishSignedAction = { st: State =>
+  val extracted = Project.extract(st)
+  val ref = extracted.get(thisProjectRef)
+  extracted.runAggregated(com.typesafe.sbt.pgp.PgpKeys.publishSigned in Global in ref, st)
+}
+
+import sbtrelease._
+import ReleaseStateTransformations._
+
+releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,
+  inquireVersions,
+  runTest,
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  publishArtifacts.copy(action = publishSignedAction),
+  setNextVersion,
+  commitNextVersion,
+  pushChanges
+)

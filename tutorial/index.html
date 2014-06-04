@@ -13,9 +13,31 @@
     	There is one deployable artifact, the library  <a href="#code/src" class="shortcut">src</a>. 
     </p>
 
+    <h2>Replacements</h2>
+
+    <p>
+        You'll need to update the following resources from the initial seed template
+	<ul>
+	    <li>User email address in config/external/gerrit/reviewers.yml</li>
+	    <li>License, homepage, repository & developers information in build.sbt</li>
+	    <li>User email address in .travis.yml</li>
+        </ul>
+    </p>
+
     <h2>Deploying to Maven Central</h2>
     <p>
-        TODO: Fill in details about credentials/sonatype.sbt
+        See: <a href="http://www.scala-sbt.org/0.13.2/docs/Community/Using-Sonatype.html">SBT: Using Sonatype</a>
+
+	The credentials for your Sonatype OSSRH account need to be added somewhere.
+	Common convention is a ~/.sbt/0.13/sonatype.sbt file.
+        
+	In sbt, run publishSigned to publish your jar to Sonatype, afterwards you can
+	run sonatypeRelease to perform the close and release steps in the Sonatype Nexus repository.
+
+	<em>
+	    Note: If your project version has a "SNAPSHOT" suffix, your project will be published to
+	    the snapshot repository of Sonatype, and you cannot use the sonatypeRelease command.
+        </em>
     </p>
 </div>
 
